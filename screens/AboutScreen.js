@@ -1,5 +1,5 @@
-import { ScrollView, Text, FlatList } from 'react-native';
-import { Card, CardTitle, Avatar, ListItem } from 'react-native-elements';
+import { ScrollView, Text } from 'react-native';
+import { Card, Avatar, ListItem } from 'react-native-elements';
 import { PARTNERS } from '../shared/partners.js';
 
 const AboutScreen = () => {

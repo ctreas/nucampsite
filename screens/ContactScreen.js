@@ -1,5 +1,5 @@
 import { ScrollView, Text } from 'react-native';
-import { Card, CardTitle } from 'react-native-elements';
+import { Card } from 'react-native-elements';
 
 const ContactScreen = () => {
     return (
