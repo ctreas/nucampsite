@@ -20,8 +20,8 @@ const ContactScreen = () => {
                     <Text>Email: campsites@nucamp.co</Text>
             </Card>
         </ScrollView>
-    )
-}
+    );
+};
 
 
 export default ContactScreen;
