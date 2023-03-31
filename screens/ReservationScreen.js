@@ -21,7 +21,6 @@ const ReservationScreen = () => {
         console.log('hikeIn:', hikeIn);
         console.log('date:', date);
         setShowModal(!showModal);
-
     };
 
     const resetForm = () => {
@@ -29,7 +28,7 @@ const ReservationScreen = () => {
         setHikeIn(false);
         setDate(new Date());
         setShowCalendar(false);
-    }
+    };
 
     return (
         <ScrollView>
@@ -100,7 +99,6 @@ const ReservationScreen = () => {
                         title='Close'
                     />
                 </View>
-
             </Modal>
         </ScrollView>
     );

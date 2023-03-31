@@ -1,7 +1,8 @@
 import RenderCampsite from '../features/campsites/RenderCampsite';
 import { useSelector, useDispatch } from 'react-redux';
-import { FlatList, StyleSheet, Text, View  } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Button, Modal  } from 'react-native';
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
+import { useState } from 'react';
 
 
 const CampsiteInfoScreen = ({ route }) => {
@@ -9,6 +10,7 @@ const CampsiteInfoScreen = ({ route }) => {
     const comments = useSelector((state) => state.comments);
     const favorites = useSelector((state) => state.favorites);
     const dispatch = useDispatch();
+    const [showModal, setShowModal] = useState(false);
 
     const renderCommentItem = ({item}) => {
         return ( 
@@ -20,8 +22,10 @@ const CampsiteInfoScreen = ({ route }) => {
         );
     };
 
-    return(
+    return (
+        <>
         <FlatList
+            onShowModal={() => setShowModal(!showModal)}
             data={comments.commentsArray.filter(
                 (comment) => comment.campsiteId === campsite.id)}
             renderItem={renderCommentItem}
@@ -32,6 +36,7 @@ const CampsiteInfoScreen = ({ route }) => {
             ListHeaderComponent={
                 <>
                     <RenderCampsite 
+                        onShowModal={() => setShowModal(!showModal)}
                         campsite={campsite} 
                         isFavorite={favorites.includes(campsite.id)}
                         markFavorite={() => 
@@ -42,7 +47,28 @@ const CampsiteInfoScreen = ({ route }) => {
                 </> 
             }
         />
-    );
+        <>
+            <Modal
+                animationType='slide'
+                transparent={false}
+                visible={showModal}
+                onRequestClose={() => setShowModal(!showModal)}
+            >
+                <View style={styles.modal}>
+                    <View style={{ margin: 10 }}>
+                        <Button 
+                            onPress={() => {
+                                setShowModal(!showModal);
+                            }}
+                            color='#808080'
+                            title='Cancel'
+                    />
+                    </View>
+                </View>
+            </Modal>
+        </>
+    </>
+    )
 };
 
 const styles = StyleSheet.create({
@@ -59,6 +85,10 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         backgroundColor: '#fff',
+    },
+    modal: {
+        justifyContent: 'center',
+        margin: 20
     }
 });
 
