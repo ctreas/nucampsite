@@ -2,6 +2,7 @@ import RenderCampsite from '../features/campsites/RenderCampsite';
 import { useSelector, useDispatch } from 'react-redux';
 import { FlatList, StyleSheet, Text, View, Button, Modal  } from 'react-native';
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
+import { postComment } from '../features/comments/commentsSlice';
 import { useState } from 'react';
 import { Rating, Input } from 'react-native-elements';
 
@@ -13,8 +14,8 @@ const CampsiteInfoScreen = ({ route }) => {
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState(false);
     const [rating, setRating] = useState(5);
-    const [author, setAuthor] = useState();
-    const [text, setText] = useState();
+    const [author, setAuthor] = useState('');
+    const [text, setText] = useState('');
 
     const handleSubmit = () => {
         const newComment = {
@@ -23,14 +24,14 @@ const CampsiteInfoScreen = ({ route }) => {
             text,
             campsiteId: campsite.id,
         };
-        console.log(newComment);
+        dispatch(postComment(newComment));
         setShowModal(!showModal);
     }
 
     const resetForm = () => {
         setRating(5);
-        setAuthor();
-        setText();
+        setAuthor('');
+        setText('');
     }
 
     const renderCommentItem = ({item}) => {
@@ -90,18 +91,20 @@ const CampsiteInfoScreen = ({ route }) => {
                         style={{paddingVertical: 10}}
                     />
                     <Input 
+                        label='Name'
                         placeholder='First and Last Name'
                         leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                         leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(rating)=> setRating(rating)}
-                        value={(rating)}
+                        onChangeText={({rating})=> setRating({ author: rating})}
+                        value={({rating})}
                     />
                     <Input 
+                        label="Feedback"
                         placeholder='Your comment here'
                         leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
                         leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={(rating)=> setRating(rating)}
-                        value={(rating)}
+                        onChangeText={({rating})=> setRating({ comment: rating})}
+                        value={({rating})}
                     />
                     <View style={{ margin: 10 }}>
                         <Button 
