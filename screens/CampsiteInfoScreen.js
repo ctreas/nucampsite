@@ -5,6 +5,7 @@ import { toggleFavorite } from '../features/favorites/favoritesSlice';
 import { postComment } from '../features/comments/commentsSlice';
 import { useState } from 'react';
 import { Rating, Input } from 'react-native-elements';
+import * as Animatable from 'react-native-animatable';
 
 
 const CampsiteInfoScreen = ({ route }) => {
@@ -50,31 +51,34 @@ const CampsiteInfoScreen = ({ route }) => {
     };
 
     return (
-        <>
-        <FlatList
-            onShowModal={() => setShowModal(!showModal)}
-            data={comments.commentsArray.filter(
-                (comment) => comment.campsiteId === campsite.id)}
-            renderItem={renderCommentItem}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={{
-                marginHorizontal: 20, 
-                paddingVertical: 20}}
-            ListHeaderComponent={
-                <>
-                    <RenderCampsite 
-                        onShowModal={() => setShowModal(!showModal)}
-                        campsite={campsite} 
-                        isFavorite={favorites.includes(campsite.id)}
-                        markFavorite={() => 
-                            dispatch(toggleFavorite(campsite.id))}
-                    />
-                    <Text style={styles.commentsTitle}>Comments</Text>
-                    
-                </> 
-            }
-        />
-        <>
+        <Animatable.View
+                animation='fadeInUp'
+                duration={2000}
+                delay={1000}
+            >
+            <FlatList
+                onShowModal={() => setShowModal(!showModal)}
+                data={comments.commentsArray.filter(
+                    (comment) => comment.campsiteId === campsite.id)}
+                renderItem={renderCommentItem}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={{
+                    marginHorizontal: 20, 
+                    paddingVertical: 20}}
+                ListHeaderComponent={
+                    <>
+                        <RenderCampsite 
+                            onShowModal={() => setShowModal(!showModal)}
+                            campsite={campsite} 
+                            isFavorite={favorites.includes(campsite.id)}
+                            markFavorite={() => 
+                                dispatch(toggleFavorite(campsite.id))}
+                        />
+                        <Text style={styles.commentsTitle}>Comments</Text>
+                        
+                    </> 
+                }
+            />
             <Modal
                 animationType='slide'
                 transparent={false}
@@ -128,8 +132,7 @@ const CampsiteInfoScreen = ({ route }) => {
                     </View>
                 </View>
             </Modal>
-        </>
-    </>
+        </Animatable.View>
     )
 };
 
