@@ -23,17 +23,17 @@ const CampsiteInfoScreen = ({ route }) => {
             author,
             rating,
             text,
-            campsiteId: campsite.id,
+            campsiteId: campsite.id
         };
         dispatch(postComment(newComment));
         setShowModal(!showModal);
-    }
+    };
 
     const resetForm = () => {
         setRating(5);
         setAuthor('');
         setText('');
-    }
+    };
 
     const renderCommentItem = ({item}) => {
         return ( 
@@ -41,10 +41,9 @@ const CampsiteInfoScreen = ({ route }) => {
                 <Text style={{fontSize: 14}}>{item.text}</Text>
                 <Rating
                     readonly={true}
-                    startingValue={(rating)}
+                    startingValue={item.rating}
                     imageSize={10}
-                    style={{paddingVertical: 5, alignItems: 'flex-start'}}>
-                </Rating>
+                    style={{paddingVertical: '5%', alignItems: 'flex-start'}}/>
                 <Text style={{fontSize: 12}}>{`-- ${item.author}, ${item.date}`}</Text>
             </View>
         );
@@ -57,7 +56,6 @@ const CampsiteInfoScreen = ({ route }) => {
                 delay={1000}
             >
             <FlatList
-                onShowModal={() => setShowModal(!showModal)}
                 data={comments.commentsArray.filter(
                     (comment) => comment.campsiteId === campsite.id)}
                 renderItem={renderCommentItem}
@@ -89,7 +87,7 @@ const CampsiteInfoScreen = ({ route }) => {
                     <Rating 
                         type='star'
                         showRating
-                        startingValue={(rating)}
+                        startingValue={rating}
                         imageSize={40}
                         onFinishRating={(rating) => setRating(rating)}
                         style={{paddingVertical: 10}}
@@ -99,16 +97,16 @@ const CampsiteInfoScreen = ({ route }) => {
                         placeholder='First and Last Name'
                         leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                         leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={({rating})=> setRating({ author: rating})}
-                        value={({rating})}
+                        onChangeText={(author)=> setAuthor(author)}
+                        value={author}
                     />
                     <Input 
                         label="Feedback"
                         placeholder='Your comment here'
                         leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
                         leftIconContainerStyle={{paddingRight: 10}}
-                        onChangeText={({rating})=> setRating({ comment: rating})}
-                        value={({rating})}
+                        onChangeText={(text)=> setText(Text)}
+                        value={text}
                     />
                     <View style={{ margin: 10 }}>
                         <Button 
@@ -133,7 +131,7 @@ const CampsiteInfoScreen = ({ route }) => {
                 </View>
             </Modal>
         </Animatable.View>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
