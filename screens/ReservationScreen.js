@@ -109,7 +109,7 @@ const ReservationScreen = () => {
                 <View style={styles.formRow}>
                     <Text style={styles.formLabel}>Hike in?</Text>
                     <Switch
-                        styles={styles.formItem}
+                        style={styles.formItem}
                         value={hikeIn}
                         trackColor={{ true: '#5637DD', false: null }}
                         onValueChange={(value) => setHikeIn(value)} />
